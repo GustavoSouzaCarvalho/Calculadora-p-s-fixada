@@ -1,0 +1,63 @@
+import java.util.Stack;
+
+public class PostfixCalculator {
+    private Stack<Float> stack; 
+
+    public PostfixCalculator() {
+        stack = new Stack<>();
+    }
+
+    public void operand(float v) {
+        stack.push(v); // Empilha o operando
+        System.out.printf("%.2f\n", v); // Imprime o topo da pilha
+    }
+
+    public void operator(char op) {
+        float v1, v2, result;
+        if (stack.isEmpty()) // Desempilha operandos
+            v2 = 0.0f;
+        else
+            v2 = stack.pop();
+        if (stack.isEmpty())
+            v1 = 0.0f;
+        else
+            v1 = stack.pop();
+
+        switch (op) { 
+            case '+':
+                result = v1 + v2;
+                break;
+            case '-':
+                result = v1 - v2;
+                break;
+            case '*':
+                result = v1 * v2;
+                break;
+            case '/':
+                result = v1 / v2;
+                break;
+            default:
+                throw new IllegalArgumentException("Operador inválido: " + op);
+        }
+
+        stack.push(result); // Empilha o resultado
+        System.out.printf("%.2f\n", result); // Imprime o topo da pilha
+    }
+
+//calculadora com formato de duas casas decimais:
+    public static void main(String[] args) {
+        PostfixCalculator calculator = new PostfixCalculator(); 
+
+        calculator.operand(5.0f);
+        calculator.operand(3.0f);
+        calculator.operator('+');
+
+        calculator.operand(10.0f);
+        calculator.operand(2.0f);
+        calculator.operator('/');
+
+        calculator.operand(7.0f);
+        calculator.operand(2.0f);
+        calculator.operator('*');
+    }
+}
